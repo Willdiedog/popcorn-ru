@@ -48,7 +48,7 @@ class Show extends BaseMedia
 
     /**
      * @var ShowLocale[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Locale\ShowLocale", fetch="EAGER", mappedBy="show")
+     * @ORM\OneToMany(targetEntity="App\Entity\Locale\ShowLocale", fetch="EAGER", mappedBy="media")
      */
     protected $locales;
     public function getLocales() { return $this->locales; }

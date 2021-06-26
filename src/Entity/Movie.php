@@ -31,7 +31,7 @@ class Movie extends BaseMedia
 
     /**
      * @var MovieLocale[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Locale\MovieLocale", fetch="EAGER", mappedBy="movie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Locale\MovieLocale", fetch="EAGER", mappedBy="media")
      */
     protected $locales;
     public function getLocales() { return $this->locales; }

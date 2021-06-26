@@ -2,7 +2,9 @@
 
 namespace App\Repository\Locale;
 
+use App\Entity\Anime;
 use App\Entity\BaseMedia;
+use App\Entity\Locale\AnimeLocale;
 use App\Entity\Locale\BaseLocale;
 use App\Entity\Locale\MovieLocale;
 use App\Entity\Locale\ShowLocale;
@@ -29,18 +31,18 @@ class BaseLocaleRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function findOrCreateByMovieAndLocale(Movie $media, string $locale): MovieLocale
+    public function findOrCreateByMediaAndLocale(BaseMedia $media, string $locale): BaseLocale
     {
         $qb = $this->_em->createQueryBuilder()
             ->select('m')
-            ->from(MovieLocale::class, 'm');
+            ->from(BaseLocale::class, 'm');
         $qb->where('m.locale = :locale')->setParameter('locale', $locale);
-        $qb->andWhere('m.movie = :id')->setParameter('id', $media->getId());
+        $qb->andWhere('m.media = :id')->setParameter('id', $media->getId());
         $localeObj = $qb->getQuery()->getOneOrNullResult();
 
         if (!$localeObj) {
-            $localeObj = new MovieLocale();
-            $localeObj->setMovie($media);
+            $localeObj = $this->getLocaleByMedia(get_class($media));
+            $localeObj->setMedia($media);
             $localeObj->setLocale($locale);
             $this->_em->persist($localeObj);
         }
@@ -48,23 +50,16 @@ class BaseLocaleRepository extends ServiceEntityRepository
         return $localeObj;
     }
 
-    public function findOrCreateByShowAndLocale(Show $media, string $locale): ShowLocale
+    protected function getLocaleByMedia($mediaClass)
     {
-        $qb = $this->_em->createQueryBuilder()
-            ->select('m')
-            ->from(ShowLocale::class, 'm');
-        $qb->where('m.locale = :locale')->setParameter('locale', $locale);
-        $qb->andWhere('m.show = :id')->setParameter('id', $media->getId());
-        $localeObj = $qb->getQuery()->getOneOrNullResult();
-
-        if (!$localeObj) {
-            $localeObj = new ShowLocale();
-            $localeObj->setShow($media);
-            $localeObj->setLocale($locale);
-            $this->_em->persist($localeObj);
+        switch ($mediaClass) {
+            case Movie::class:
+                return new MovieLocale();
+            case Show::class:
+                return new ShowLocale();
+            case Anime::class:
+                return new AnimeLocale();
         }
-
-        return $localeObj;
     }
 
     /**
