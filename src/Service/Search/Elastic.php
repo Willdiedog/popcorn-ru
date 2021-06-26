@@ -2,6 +2,7 @@
 
 namespace App\Service\Search;
 
+use App\Entity\Anime;
 use App\Entity\BaseMedia;
 use App\Entity\Movie;
 use App\Entity\Show;
@@ -17,17 +18,20 @@ class Elastic implements SearchInterface
 
     protected TransformedFinder $moviesFiner;
     protected TransformedFinder $showFiner;
+    protected TransformedFinder $animesFiner;
 
     /**
      * Elastic constructor.
      *
      * @param TransformedFinder $moviesFiner
      * @param TransformedFinder $showFiner
+     * @param TransformedFinder $animesFiner
      */
-    public function __construct(TransformedFinder $moviesFiner, TransformedFinder $showFiner)
+    public function __construct(TransformedFinder $moviesFiner, TransformedFinder $showFiner, TransformedFinder $animesFiner)
     {
         $this->moviesFiner = $moviesFiner;
         $this->showFiner = $showFiner;
+        $this->animesFiner = $animesFiner;
     }
 
     public static function isIndexMovie(Movie $movie)
@@ -38,6 +42,11 @@ class Elastic implements SearchInterface
     public static function isIndexShow(Show $show)
     {
         return $show->getEpisodes()->count() > 0;
+    }
+
+     public static function isIndexAnime(Anime $anime)
+    {
+        return $anime->getEpisodes()->count() > 0;
     }
 
     public function search(QueryBuilder $qb, ClassMetadata $class, PageRequest $pageRequest, string $locale, int $offset, int $limit): array
@@ -89,6 +98,9 @@ class Elastic implements SearchInterface
                 break;
             case Show::class:
                 $finder = $this->showFiner;
+                break;
+            case Anime::class:
+                $finder = $this->animesFiner;
                 break;
         }
         /** @var BaseMedia[] $result */
