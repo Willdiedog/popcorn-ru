@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.4",
+        "ext-anitomy": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -16,6 +17,7 @@
         "php-http/cache-plugin": "^1.7",
         "php-tmdb/symfony": "4.0.x-dev",
         "ramsey/uuid-doctrine": "^1.5",
+        "s1njar/kitsu-php": "dev-fix",
         "sensio/framework-extra-bundle": "^5.5",
         "sentry/sentry-symfony": "^3.2",
         "symfony/console": "^5.1",
@@ -66,6 +68,10 @@
         {
             "type": "git",
             "url": "https://github.com/php-tmdb/symfony"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Ruin0x11/kitsu-php"
         }
     ],
     "scripts": {
