@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Processors\ShowTorrentProcessor;
+use App\Processors\TorrentFilesLinkProcessor;
 use App\Processors\TopicProcessor;
 use App\Service\MediaService;
 use Enqueue\Null\NullContext;
@@ -18,11 +18,11 @@ class TestTorrentCommand extends Command
     protected static $defaultName = 'test:torrent';
 
     /**
-     * @var ShowTorrentProcessor
+     * @var TorrentFilesLinkProcessor
      */
     private $processor;
 
-    public function __construct(ShowTorrentProcessor $processor)
+    public function __construct(TorrentFilesLinkProcessor $processor)
     {
         parent::__construct();
         $this->processor = $processor;
