@@ -2,7 +2,7 @@
 
 namespace App\Repository\Locale;
 
-use App\Entity\Episode;
+use App\Entity\Episode\Episode;
 use App\Entity\Locale\EpisodeLocale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

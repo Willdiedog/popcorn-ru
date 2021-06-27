@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Processors\ForumProcessor;
 use App\Processors\SyncProcessor;
+use App\Repository\AnimeRepository;
 use App\Repository\MovieRepository;
 use App\Repository\ShowRepository;
 use App\Repository\TorrentRepository;
@@ -21,42 +22,31 @@ class SyncCommand extends Command
 {
     protected static $defaultName = 'update:syncOld';
 
-    /** @var ProducerInterface */
-    private $producer;
+    private ProducerInterface $producer;
 
-    /**
-     * @var TorrentRepository
-     */
-    private $torrentRepository;
+    private TorrentRepository $torrentRepository;
 
-    /**
-     * @var MovieRepository
-     */
-    private $movieRepository;
+    private MovieRepository $movieRepository;
+    private ShowRepository $showRepository;
+    private AnimeRepository $animeRepository;
 
-    /**
-     * @var ShowRepository
-     */
-    private $showRepository;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         TorrentRepository $torrentRepository,
         MovieRepository $movieRepository,
         ShowRepository $showRepository,
+        AnimeRepository $animeRepository,
         ProducerInterface $producer,
         LoggerInterface $logger
-        )
+    )
     {
         parent::__construct();
         $this->producer = $producer;
         $this->torrentRepository = $torrentRepository;
         $this->movieRepository = $movieRepository;
         $this->showRepository = $showRepository;
+        $this->animeRepository = $animeRepository;
         $this->logger = $logger;
     }
 

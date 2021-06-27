@@ -2,7 +2,7 @@
 
 namespace App\Serializer\Normalizer;
 
-use App\Entity\Episode;
+use App\Entity\Episode\Episode;
 use App\Entity\Show;
 use App\Repository\TorrentRepository;
 use App\Request\LocaleRequest;
